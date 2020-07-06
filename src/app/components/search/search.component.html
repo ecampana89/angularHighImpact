@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+<div class="card-columns">
+    <div class="card" *ngFor="let search of searchs; let i =index">
+        <img class="atm" src="assets/img/atm.png" class="card-img-top" [alt]="search.address.city">
+        <div class="card-body">
+          <h4 class="card-title">City: {{search.address.city}}</h4>
+          <!-- <h5 class="card-title">Street: {{search.address.street}} {{search.address.housenumber}}</h5> -->
+          <p class="card-text">Street: {{search.address.street}} {{search.address.housenumber}} </p>
+          <p class="card-text">Postal code: {{search.address.postalcode}} </p>
+           <p class="card-text"><small class="text-muted">Geolocation: Lat: {{search.address.geoLocation.lat}} - Lng: {{search.address.geoLocation.lng}} </small></p> 
+          <button (click)=verMapa(i) type="button"
+          class="btn btn-outline-primary btn-block">
+              view map...
+          </button>
+          <!-- <a [routerLink]="['/atm',i]" class="btn btn-outline-primary">  + info...</a> -->
+        </div>
+      </div>
+</div> 
+
