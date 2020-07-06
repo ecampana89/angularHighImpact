@@ -17,9 +17,21 @@
         </li> 
         
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <form class="form-inline my-2 my-lg-0" (submit)="onSubmit()">
+        <!-- checkbox filter -->
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="inlineCheckbox1"  [(ngModel)]="inlineCheckbox1">
+          <label class="form-check-label" for="inlineCheckbox1">Street</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="inlineCheckbox2" [(ngModel)]="inlineCheckbox2">
+          <label class="form-check-label" for="inlineCheckbox2">City</label>
+        </div>
+
+
+
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"  name="searchInput" [(ngModel)]="searchInput">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
       </form>
     </div>
   </nav>

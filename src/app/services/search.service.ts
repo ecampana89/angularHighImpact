@@ -8,40 +8,57 @@ import { Observable } from 'rxjs';
 export class SearchService {
 
 private searchs: any[] = [];
-searchUrl: string = "http://vps-1575977-x.dattaweb.com:8080/atscom/atm";
+searchUrl: string ="";
 token: string;
+filterUrl:string = '';
 
   constructor(private _http:HttpClient) {
    }
 
-   getSearchs(data:string) {
-      this.getAtms(data);
+   getSearchs(data:string,filter1:string, filter2:string) {
+    console.log(data);
+    console.log(filter1);
+    console.log(filter2);
+    this.searchUrl = "http://vps-1575977-x.dattaweb.com:8080/atscom/atm";
+    this.getAtms(data,filter1,filter2);
 
      if(this.searchs)
-    
      return this.searchs
   }
 
 
-  getAtms(data:string):void{
+  getAtms(data:string,filter1:string,filter2:string):void{
       if(localStorage.getItem('token')){
           this.token = localStorage.getItem('token');
       }
     const headers = new HttpHeaders().set('Authorization', this.token);
   
+    this.filterUrl += this.searchUrl + '?q=';
     if(!data){
-      data='Van';
+      //default
+      data='';
     }
+    this.filterUrl+=data+ '&fields=';
+    if(filter1 && filter2){
+      this.filterUrl+='street,city';
+    }else if(filter1){
+      this.filterUrl+='street';
+    }else{
+      this.filterUrl+='city';
+    }
+    console.log(this.filterUrl);
+    
      this._http.get<any>(
-      this.searchUrl+'?q='+data+'&fields=street,city',  
+      this.filterUrl,  
       { headers}
     ).subscribe(data=> {
       console.log(data);
-      console.log('data get: '+JSON.stringify(data));
+     //console.log('data get: '+JSON.stringify(data));
       if(data){
       this.searchs = data;
-      console.log(this.searchs);
+      //console.log(this.searchs);
       }
+      this.filterUrl = "";
     })
   }
 
