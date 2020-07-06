@@ -5,12 +5,14 @@
       <div class="form-group">
           <label for="inputUser">* Usuario:&nbsp;&nbsp;&nbsp;&nbsp;</label>
           <input type="text" class="col-sm-5 col-form-label" name="user" [(ngModel)]="inputUser" aria-describedby="userHelp">
-          <small id="userHelp" class="form-text text-muted">*campos obligatorios</small>
+          <small id="userHelp" class="form-text text-muted" >*campos obligatorios</small>
       </div>
       <div class="form-group">
           <label for="inputPassword">* Password:&nbsp;</label>
           <input type="password" class="col-sm-5 col-form-label" name="pass" [(ngModel)]="inputPassword">
       </div>
+      <small [hidden]="!validationError" style="color: red !important;"  class="form-text text-muted" >Incorrect user or password</small>
+      <p></p>
       &nbsp;<button type="submit" class="btn btn-dark">Submit</button>
   </form>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   token: string;
   inputUser: string;
   inputPassword: string;
+  validationError: boolean = false;
 
 
   constructor(private _http:HttpClient,
@@ -30,19 +31,31 @@ export class LoginComponent implements OnInit {
   postLogin(data:any):any{
     const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
   
-     this._http.post(
-      this.loginUrl, 
-      data, 
-      { headers, responseType: 'text'}
-    ).subscribe(data=> {
-      console.log('data: '+data);
-      if(data){
-      this.token = data;
-      console.log('token: '+this.token);
-      localStorage.setItem('token', data);
-      this.redirectSearch();
-      }
-    })
+    try{
+      this._http.post(this.loginUrl, data,  { headers, responseType: 'text'})
+      .subscribe((data: any) =>  {
+        console.log('data: '+data);
+        if(data){
+          debugger;
+          this.token = data;
+          console.log('token: '+this.token);
+          localStorage.setItem('token', data);
+            this.redirectSearch();
+      
+        }else{
+          debugger;
+            this.validationError = true
+        }
+      },(error: HttpErrorResponse) => {
+        debugger;
+        this.validationError = true
+        console.log(error);
+      })
+    }catch(e){
+      debugger;
+      this.validationError = true
+      console.log(e);
+    }
   }
 
   redirectSearch(){
