@@ -15,19 +15,22 @@ filterUrl:string = '';
   constructor(private _http:HttpClient) {
    }
 
-   getSearchs(data:string,filter1:string, filter2:string) {
+   async getSearchs(data:string,filter1:string, filter2:string) {
     console.log(data);
     console.log(filter1);
     console.log(filter2);
+    debugger;
     this.searchUrl = "http://vps-1575977-x.dattaweb.com:8080/atscom/atm";
-    this.getAtms(data,filter1,filter2);
-
-     if(this.searchs)
-     return this.searchs
+    this.searchs= await this.getAtms(data,filter1,filter2);
+    this.filterUrl = "";
+    debugger;
+    return this.searchs
   }
 
 
-  getAtms(data:string,filter1:string,filter2:string):void{
+  getAtms(data:string,filter1:string,filter2:string): Promise<any> {
+
+    let result: any;
       if(localStorage.getItem('token')){
           this.token = localStorage.getItem('token');
       }
@@ -47,19 +50,22 @@ filterUrl:string = '';
       this.filterUrl+='city';
     }
     console.log(this.filterUrl);
-    
-     this._http.get<any>(
+    debugger;
+     return this._http.get<any>(
       this.filterUrl,  
       { headers}
-    ).subscribe(data=> {
+    ).toPromise();
+  
+    /* .subscribe(data=> {
       console.log(data);
      //console.log('data get: '+JSON.stringify(data));
       if(data){
-      this.searchs = data;
+      result= data;
       //console.log(this.searchs);
       }
       this.filterUrl = "";
     })
+    return result; */
   }
 
   getATM(idx:number):ATM {

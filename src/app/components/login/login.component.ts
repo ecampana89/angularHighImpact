@@ -36,23 +36,19 @@ export class LoginComponent implements OnInit {
       .subscribe((data: any) =>  {
         console.log('data: '+data);
         if(data){
-          debugger;
           this.token = data;
           console.log('token: '+this.token);
           localStorage.setItem('token', data);
             this.redirectSearch();
       
         }else{
-          debugger;
             this.validationError = true
         }
       },(error: HttpErrorResponse) => {
-        debugger;
         this.validationError = true
         console.log(error);
       })
     }catch(e){
-      debugger;
       this.validationError = true
       console.log(e);
     }
