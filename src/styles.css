@@ -21,3 +21,7 @@ header{
   .form {
     width: 500px;
   }
+
+  html{
+    background-image: url(./assets/img/background.jpg);
+}

@@ -3,7 +3,6 @@
 <div class="alert alert-primary" role="alert" *ngIf="searchs.length == 0">
   There are no results for the search!
 </div>
-
 <div class="card-columns">
     <div class="card" *ngFor="let search of searchs; let i =index">
         <img class="atm" src="assets/img/atm.png" class="card-img-top" [alt]="search.address.city">
